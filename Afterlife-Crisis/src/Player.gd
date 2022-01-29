@@ -55,7 +55,7 @@ func _input(event):
 			elif raycast.is_colliding():
 				var col = raycast.get_collider()
 				if col.is_in_group("interactable"):
-					emit_signal("update_text", col.interact_text)
+					emit_signal("update_text", col.get_dialog())
 
 		if event.is_action_pressed("jump") && is_on_floor():
 			velocity.y = 15
@@ -82,3 +82,7 @@ func get_direction():
 	if Input.is_action_pressed("walk_right"):
 		direction += global_transform.basis.x
 	return direction.normalized()
+
+
+func get_dialog():
+	return interact_text
