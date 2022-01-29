@@ -1,0 +1,20 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Carpet.obj-3e24773b347d0be614008c7d3ffa2b3a.mesh"
+
+[deps]
+
+files=[ "res://.import/Carpet.obj-3e24773b347d0be614008c7d3ffa2b3a.mesh" ]
+
+source_file="res://Voxel Models/Carpet.obj"
+dest_files=[ "res://.import/Carpet.obj-3e24773b347d0be614008c7d3ffa2b3a.mesh", "res://.import/Carpet.obj-3e24773b347d0be614008c7d3ffa2b3a.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+octahedral_compression=true
+optimize_mesh_flags=4286

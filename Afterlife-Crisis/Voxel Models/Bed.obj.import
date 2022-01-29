@@ -1,0 +1,20 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Bed.obj-5a08c03c5d89c53b9726944350d4e8f5.mesh"
+
+[deps]
+
+files=[ "res://.import/Bed.obj-5a08c03c5d89c53b9726944350d4e8f5.mesh" ]
+
+source_file="res://Voxel Models/Bed.obj"
+dest_files=[ "res://.import/Bed.obj-5a08c03c5d89c53b9726944350d4e8f5.mesh", "res://.import/Bed.obj-5a08c03c5d89c53b9726944350d4e8f5.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+octahedral_compression=true
+optimize_mesh_flags=4286

@@ -1,0 +1,20 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Pen.obj-b2d11f8089873bad5e99b0812273d966.mesh"
+
+[deps]
+
+files=[ "res://.import/Pen.obj-b2d11f8089873bad5e99b0812273d966.mesh" ]
+
+source_file="res://Voxel Models/Pen.obj"
+dest_files=[ "res://.import/Pen.obj-b2d11f8089873bad5e99b0812273d966.mesh", "res://.import/Pen.obj-b2d11f8089873bad5e99b0812273d966.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+octahedral_compression=true
+optimize_mesh_flags=4286

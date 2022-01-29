@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://src/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/Main.gd" type="Script" id=2]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 15, 0.5, 15 )
@@ -11,6 +12,7 @@ size = Vector3( 30, 1, 30 )
 [node name="Main" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -24,13 +26,13 @@ __meta__ = {
 }
 
 [node name="ViewportContainer" type="ViewportContainer" parent="HBoxContainer"]
-margin_right = 510.0
-margin_bottom = 600.0
+margin_right = 598.0
+margin_bottom = 700.0
 size_flags_horizontal = 3
 stretch = true
 
 [node name="Viewport" type="Viewport" parent="HBoxContainer/ViewportContainer"]
-size = Vector2( 510, 600 )
+size = Vector2( 598, 700 )
 handle_input_locally = false
 render_target_update_mode = 3
 
@@ -38,20 +40,21 @@ render_target_update_mode = 3
 transform = Transform( 1.19209e-07, 0, -1, 0, 1, 0, 1, 0, 1.19209e-07, -5, 0, 0 )
 
 [node name="ViewportContainer2" type="ViewportContainer" parent="HBoxContainer"]
-margin_left = 514.0
-margin_right = 1024.0
-margin_bottom = 600.0
+margin_left = 602.0
+margin_right = 1200.0
+margin_bottom = 700.0
 size_flags_horizontal = 3
 stretch = true
 
 [node name="Viewport" type="Viewport" parent="HBoxContainer/ViewportContainer2"]
-size = Vector2( 510, 600 )
+size = Vector2( 598, 700 )
 handle_input_locally = false
 render_target_update_mode = 3
 
 [node name="Player2" parent="HBoxContainer/ViewportContainer2/Viewport" instance=ExtResource( 1 )]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5, 0, 0 )
-camera_enabled = false
+current_player = false
+color = Color( 0, 0, 0, 1 )
 
 [node name="Floor" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 0 )
@@ -63,3 +66,9 @@ shape = SubResource( 1 )
 mesh = SubResource( 2 )
 skeleton = NodePath("../..")
 material/0 = null
+
+[node name="PlayerSwitchCooldown" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[connection signal="timeout" from="PlayerSwitchCooldown" to="." method="_on_PlayerSwitchCooldown_timeout"]
