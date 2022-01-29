@@ -1,8 +1,8 @@
 class_name Player
 extends KinematicBody
 
+export(Texture) var character_sprite
 export(bool) var current_player = true
-export(Color) var color = Color.white
 export(String) var interact_text = "Hello clone brother what is up my guy would you like a drink?"
 
 signal switch_character
@@ -22,9 +22,7 @@ onready var raycast = $Pivot/RayCast
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var material = SpatialMaterial.new()
-	material.albedo_color = color
-	$MeshInstance.set_surface_material(0, material)
+	$UI/PlayerImage.texture = character_sprite
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	connect("update_text", $UI, "on_update_text")
 
@@ -35,6 +33,8 @@ func _physics_process(delta):
 	
 	if current_player:
 		var vel = get_direction() * speed
+		if Input.is_action_pressed("run"):
+			vel *= 2
 		velocity.x = vel.x
 		velocity.z = vel.z
 	velocity = move_and_slide(velocity, Vector3.UP, true)

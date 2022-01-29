@@ -5,6 +5,7 @@ var text = ""
 var char_percent = 0
 
 onready var textbox = $Textbox
+onready var player_image = $PlayerImage
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
