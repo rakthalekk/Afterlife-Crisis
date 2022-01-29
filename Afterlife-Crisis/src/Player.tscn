@@ -1,22 +1,16 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://src/Player.gd" type="Script" id=1]
-[ext_resource path="res://Afterlife Crisis Ver2.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://icon.png" type="Texture" id=3]
-[ext_resource path="res://Sprites/Textbox.png" type="Texture" id=4]
+[ext_resource path="res://src/UI.tscn" type="PackedScene" id=2]
 
 [sub_resource type="BoxShape" id=2]
-extents = Vector3( 1, 2, 1 )
+extents = Vector3( 1, 3, 1 )
 
 [sub_resource type="SpatialMaterial" id=4]
 
 [sub_resource type="CubeMesh" id=3]
 material = SubResource( 4 )
-size = Vector3( 2, 4, 2 )
-
-[sub_resource type="DynamicFont" id=5]
-size = 32
-font_data = ExtResource( 2 )
+size = Vector3( 2, 6, 2 )
 
 [node name="Player" type="KinematicBody" groups=["interactable"]]
 script = ExtResource( 1 )
@@ -29,7 +23,7 @@ mesh = SubResource( 3 )
 material/0 = null
 
 [node name="Pivot" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
 
 [node name="Camera" type="Camera" parent="Pivot"]
 current = true
@@ -39,48 +33,4 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1 )
 enabled = true
 cast_to = Vector3( 0, 0, -8 )
 
-[node name="TextBackground" type="TextureRect" parent="."]
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-margin_left = -300.0
-margin_top = -223.0
-margin_right = 300.0
-texture = ExtResource( 4 )
-expand = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Textbox" type="Label" parent="TextBackground"]
-visible = false
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -285.0
-margin_top = -92.5
-margin_right = 285.0
-margin_bottom = 92.5
-custom_fonts/font = SubResource( 5 )
-text = "hello clone brother"
-autowrap = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureRect" type="TextureRect" parent="."]
-modulate = Color( 1, 1, 1, 0.47451 )
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -32.0
-margin_top = -32.0
-margin_right = 32.0
-margin_bottom = 32.0
-texture = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="UI" parent="." instance=ExtResource( 2 )]
