@@ -3,7 +3,7 @@ extends KinematicBody
 
 export(Texture) var character_sprite
 export(bool) var current_player = true
-export(String) var interact_text = "Hello clone brother what is up my guy would you like a drink?"
+export(String) var interact_text = "Your other self, who was split from you upon death. He has the power to accelerate, using the SHIFT key. Press TAB to control things from his perspective."
 
 signal switch_character
 signal update_text
@@ -11,7 +11,8 @@ signal update_text
 var velocity = Vector3.ZERO
 var gravity = -30
 var speed = 10
-var FAKE = false
+var walking = false
+var run = false
 
 onready var camera = $Pivot/Camera
 onready var raycast = $Pivot/RayCast
@@ -23,6 +24,7 @@ onready var raycast = $Pivot/RayCast
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	$WalkSoundTimer.start()
 	$UI/PlayerImage.texture = character_sprite
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	connect("update_text", $UI, "on_update_text")
@@ -34,8 +36,21 @@ func _physics_process(delta):
 	
 	if current_player:
 		var vel = get_direction() * speed
+		
+		if vel != Vector3.ZERO && is_on_floor():
+			walking = true
+		else:
+			walking = false
+		
+		if raycast.is_colliding():
+			$UI.set_crosshair = true
+		else:
+			$UI.set_crosshair = false
+		
+		$WalkSoundTimer.wait_time = 0.5
 		if Input.is_action_pressed("run") && get_name() == "Player":
 			vel *= 2
+			$WalkSoundTimer.wait_time = 0.3
 		
 		if Input.is_action_just_pressed("crouch") && get_name() == "Player2":
 			$MeshInstance2.visible = true
@@ -58,10 +73,12 @@ func _physics_process(delta):
 
 func _input(event):
 	if current_player:
+		$UI/Outline.visible = true
 		if event.is_action_pressed("ui_cancel"):
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 			
 		if event.is_action_pressed("click"):
+			$ClickSound.play()
 			if Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE:
 				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 			
@@ -70,12 +87,11 @@ func _input(event):
 			
 			elif raycast.is_colliding():
 				var col = raycast.get_collider()
-#				if col is Player:
-#					handle_dialog()
 				if col.is_in_group("interactable"):
 					emit_signal("update_text", col.get_dialog())
 
 		if event.is_action_pressed("jump") && is_on_floor():
+			$JumpSound.play()
 			velocity.y = 18
 		
 		if event.is_action_pressed("switch_character"):
@@ -87,6 +103,8 @@ func _input(event):
 			rotate_y(-event.relative.x * 0.002)
 			$Pivot.rotate_x(-event.relative.y * 0.002)
 			$Pivot.rotation.x = clamp($Pivot.rotation.x, -1.2, 1.2)
+	else:
+		$UI/Outline.visible = false
 
 
 func get_direction():
@@ -108,3 +126,8 @@ func handle_dialog():
 
 func get_dialog():
 	return interact_text
+
+
+func _on_WalkSoundTimer_timeout():
+	if walking:
+		$WalkSound.play()

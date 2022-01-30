@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=2]
+[gd_scene load_steps=56 format=2]
 
 [ext_resource path="res://src/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/Main.gd" type="Script" id=2]
@@ -14,6 +14,17 @@
 [ext_resource path="res://Voxel Models/Shoe.obj" type="ArrayMesh" id=12]
 [ext_resource path="res://Voxel Models/Key.obj" type="ArrayMesh" id=13]
 [ext_resource path="res://Voxel Models/Book.obj" type="ArrayMesh" id=14]
+[ext_resource path="res://src/Key.gd" type="Script" id=15]
+[ext_resource path="res://src/Door.gd" type="Script" id=16]
+[ext_resource path="res://src/Book.gd" type="Script" id=17]
+[ext_resource path="res://src/Shoe.gd" type="Script" id=18]
+[ext_resource path="res://src/Picture.gd" type="Script" id=19]
+[ext_resource path="res://Voxel Models/Door.obj" type="ArrayMesh" id=20]
+[ext_resource path="res://Voxel Models/Desk(no_missing_book).obj" type="ArrayMesh" id=21]
+[ext_resource path="res://src/DupDesk.gd" type="Script" id=22]
+[ext_resource path="res://src/Desk.gd" type="Script" id=23]
+[ext_resource path="res://Voxel Models/Knife.obj" type="ArrayMesh" id=24]
+[ext_resource path="res://src/Knife.gd" type="Script" id=25]
 
 [sub_resource type="BoxShape" id=5]
 extents = Vector3( 5.5, 1, 3 )
@@ -88,6 +99,100 @@ extents = Vector3( 0.5, 0.25, 0.1 )
 [sub_resource type="BoxShape" id=21]
 extents = Vector3( 0.5, 0.15, 0.35 )
 
+[sub_resource type="BoxShape" id=25]
+extents = Vector3( 0.5, 4.5, 2.75 )
+
+[sub_resource type="Animation" id=27]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=28]
+resource_name = "door_open"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, -120, 0 ) ]
+}
+
+[sub_resource type="BoxShape" id=29]
+
+[sub_resource type="Animation" id=30]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ) ]
+}
+
+[sub_resource type="Animation" id=31]
+resource_name = "fade_in"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=32]
+resource_name = "fade_out"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 1 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "to_win_screen"
+} ]
+}
+
 [node name="Main" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -140,6 +245,7 @@ one_shot = true
 
 [node name="Bed" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 6, 0 )
+collision_layer = 3
 script = ExtResource( 4 )
 interact_text = "It doesn't look as comfy as you remember. Maybe it's because you're dead now."
 
@@ -154,6 +260,7 @@ shape = SubResource( 5 )
 
 [node name="Bed2" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.70141, -4.52671, -34.1433 )
+collision_layer = 3
 script = ExtResource( 4 )
 interact_text = "It doesn't look as comfy as you remember. Maybe it's because you're dead now."
 
@@ -168,8 +275,8 @@ shape = SubResource( 5 )
 
 [node name="Desk" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5, 27 )
-script = ExtResource( 4 )
-interact_text = "This is the desk where you did all your work. The drawer seems to be locked."
+collision_layer = 3
+script = ExtResource( 23 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Desk"]
 mesh = ExtResource( 5 )
@@ -181,8 +288,9 @@ shape = SubResource( 8 )
 
 [node name="Carpet" type="StaticBody" parent="."]
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -10, 5.94739, 0 )
+collision_layer = 3
 script = ExtResource( 4 )
-interact_text = "It's the carpet. Almost looks like it's missing a texture."
+interact_text = "It's the carpet. It has stains of blood on it, probably your own."
 
 [node name="MeshInstance" type="MeshInstance" parent="Carpet"]
 mesh = ExtResource( 6 )
@@ -193,6 +301,7 @@ shape = SubResource( 9 )
 
 [node name="Window" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12.1525, -2.51909, 30 )
+collision_layer = 3
 script = ExtResource( 4 )
 interact_text = "The window's curtain is raised halfway. It's pitch black outside, but you aren't sure if that's because it's supposed to be night, or if it's always dark in limbo."
 
@@ -448,7 +557,7 @@ material/0 = null
 shape = SubResource( 4 )
 
 [node name="Wall4" type="StaticBody" parent="WallsFloors"]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 19.3044, 0, -7 )
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 19.4498, 0, -7 )
 
 [node name="MeshInstance" type="MeshInstance" parent="WallsFloors/Wall4"]
 mesh = SubResource( 3 )
@@ -533,6 +642,7 @@ shape = SubResource( 23 )
 
 [node name="Apple" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11, -4.44007, -34 )
+collision_layer = 3
 script = ExtResource( 4 )
 interact_text = "It's an apple, looks like it's been half eaten, but it's still fresh. Perhaps time in limbo works a bit differently than on Earth."
 
@@ -546,8 +656,8 @@ shape = SubResource( 15 )
 
 [node name="Picture" type="StaticBody" parent="."]
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -3.28057, 0, -27 )
-script = ExtResource( 4 )
-interact_text = "It's a photo of you and your coworker. You didn't know him very well, but he always seemed nice enough."
+collision_layer = 3
+script = ExtResource( 19 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Picture"]
 mesh = ExtResource( 10 )
@@ -559,6 +669,7 @@ shape = SubResource( 16 )
 
 [node name="Doll" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -11, 6.45899, -2 )
+collision_layer = 3
 script = ExtResource( 4 )
 interact_text = "It's a small doll you kept around for whatever reason. It looks like some blood was splattered on it. Does that mean..?"
 
@@ -572,8 +683,8 @@ shape = SubResource( 17 )
 
 [node name="Shoe" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -23, 6.03155, 0 )
-script = ExtResource( 4 )
-interact_text = "Looks like the culprit hid this shoe under the bed to avoid creating any tracks. It has very distinctly orange laces that seem somehow familiar..."
+collision_layer = 3
+script = ExtResource( 18 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Shoe"]
 mesh = ExtResource( 12 )
@@ -585,11 +696,11 @@ shape = SubResource( 18 )
 
 [node name="DupDesk" type="StaticBody" parent="."]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 16.8848, 6, 0 )
-script = ExtResource( 4 )
-interact_text = "The drawer opens with ease."
+collision_layer = 3
+script = ExtResource( 22 )
 
 [node name="MeshInstance" type="MeshInstance" parent="DupDesk"]
-mesh = ExtResource( 5 )
+mesh = ExtResource( 21 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="DupDesk"]
@@ -598,8 +709,8 @@ shape = SubResource( 19 )
 
 [node name="Key" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -28, 5.96158, 29.4051 )
-script = ExtResource( 4 )
-interact_text = "i am a key, hello"
+collision_layer = 3
+script = ExtResource( 15 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Key"]
 mesh = ExtResource( 13 )
@@ -609,10 +720,14 @@ material/0 = null
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0.25, -0.05 )
 shape = SubResource( 20 )
 
+[node name="KeyDelete" type="Timer" parent="Key"]
+wait_time = 0.2
+one_shot = true
+
 [node name="Book" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 28, -4.43048, 15 )
-script = ExtResource( 4 )
-interact_text = "hello i am book"
+collision_layer = 3
+script = ExtResource( 17 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Book"]
 mesh = ExtResource( 14 )
@@ -622,4 +737,63 @@ material/0 = null
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0.15, -0.05 )
 shape = SubResource( 21 )
 
+[node name="BookDelete" type="Timer" parent="Book"]
+wait_time = 0.2
+
+[node name="Door" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 19.4356, 0.298045, 13.4282 )
+collision_layer = 3
+script = ExtResource( 16 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Door"]
+transform = Transform( 1.47027e-07, 0, -1, 0, 1, 0, 1, 0, 1.47027e-07, 0, -5.02139, -2.73893 )
+mesh = ExtResource( 20 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Door"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.75 )
+shape = SubResource( 25 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Door"]
+anims/RESET = SubResource( 27 )
+anims/door_open = SubResource( 28 )
+
+[node name="Knife" type="StaticBody" parent="."]
+transform = Transform( -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -1, -2.58518, 25.2458 )
+visible = false
+collision_layer = 3
+script = ExtResource( 25 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Knife"]
+mesh = ExtResource( 24 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Knife"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+shape = SubResource( 29 )
+disabled = true
+
+[node name="KnifeDelete" type="Timer" parent="Knife"]
+
+[node name="WinTimer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[node name="ScreenBlocker" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ScreenBlocker"]
+anims/RESET = SubResource( 30 )
+anims/fade_in = SubResource( 31 )
+anims/fade_out = SubResource( 32 )
+
 [connection signal="timeout" from="PlayerSwitchCooldown" to="." method="_on_PlayerSwitchCooldown_timeout"]
+[connection signal="timeout" from="Key/KeyDelete" to="Key" method="_on_KeyDelete_timeout"]
+[connection signal="timeout" from="Book/BookDelete" to="Book" method="_on_BookDelete_timeout"]
+[connection signal="timeout" from="Knife/KnifeDelete" to="Knife" method="_on_KnifeDelete_timeout"]
+[connection signal="timeout" from="WinTimer" to="." method="_on_WinTimer_timeout"]

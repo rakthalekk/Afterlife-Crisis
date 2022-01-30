@@ -1,0 +1,20 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Desk(no_missing_book).obj-08ef138bf3bd39ec1ebc2996715f2307.mesh"
+
+[deps]
+
+files=[ "res://.import/Desk(no_missing_book).obj-08ef138bf3bd39ec1ebc2996715f2307.mesh" ]
+
+source_file="res://Voxel Models/Desk(no_missing_book).obj"
+dest_files=[ "res://.import/Desk(no_missing_book).obj-08ef138bf3bd39ec1ebc2996715f2307.mesh", "res://.import/Desk(no_missing_book).obj-08ef138bf3bd39ec1ebc2996715f2307.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+octahedral_compression=true
+optimize_mesh_flags=4286

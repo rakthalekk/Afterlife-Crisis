@@ -9,10 +9,15 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Node",
+"base": "StaticBody",
 "class": "Interactable",
 "language": "GDScript",
 "path": "res://src/Interactable.gd"
+}, {
+"base": "StaticBody",
+"class": "Key",
+"language": "GDScript",
+"path": "res://src/Key.gd"
 }, {
 "base": "KinematicBody",
 "class": "Player",
@@ -21,13 +26,14 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Interactable": "",
+"Key": "",
 "Player": ""
 }
 
 [application]
 
 config/name="Afterlife- Crisis"
-run/main_scene="res://src/Main.tscn"
+run/main_scene="res://src/TitleScreen.tscn"
 config/icon="res://icon.png"
 
 [display]

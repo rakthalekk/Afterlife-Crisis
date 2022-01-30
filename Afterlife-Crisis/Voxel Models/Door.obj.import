@@ -1,0 +1,20 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Door.obj-58491816c4a208e0fb8731f6bb5d849e.mesh"
+
+[deps]
+
+files=[ "res://.import/Door.obj-58491816c4a208e0fb8731f6bb5d849e.mesh" ]
+
+source_file="res://Voxel Models/Door.obj"
+dest_files=[ "res://.import/Door.obj-58491816c4a208e0fb8731f6bb5d849e.mesh", "res://.import/Door.obj-58491816c4a208e0fb8731f6bb5d849e.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+octahedral_compression=true
+optimize_mesh_flags=4286

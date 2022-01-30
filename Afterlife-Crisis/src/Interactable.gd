@@ -1,5 +1,5 @@
 class_name Interactable
-extends Node
+extends StaticBody
 
 export(String) var interact_text = "dummy text"
 

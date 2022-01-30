@@ -1,9 +1,12 @@
 extends Control
 
-var fake_player
-var interaction_number = 0
 
-var rng = RandomNumberGenerator.new()
+var murderer_found = false
+var weapon_found = false
+var has_key = false
+var has_book = false
+var has_shoe = false
+var win = false
 
 onready var player1 = $HBoxContainer/ViewportContainer/Viewport/Player
 onready var player2 = $HBoxContainer/ViewportContainer2/Viewport/Player2
@@ -11,21 +14,15 @@ onready var player2 = $HBoxContainer/ViewportContainer2/Viewport/Player2
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	rng.randomize()
-	if (rng.randi_range(0, 2) % 2 == 0):
-		player1.FAKE = true
-		player2.FAKE = false
-		fake_player = player1
-	else:
-		player1.FAKE = false
-		player2.FAKE = true
-		fake_player = player2
-	
-	print(fake_player.get_name())
-	
+	$ScreenBlocker/AnimationPlayer.play("fade_in")
 	player1.connect("switch_character", self, "on_switch_character_1")
 	player2.connect("switch_character", self, "on_switch_character_2")
 
+
+func _process(delta):
+	if murderer_found && weapon_found && !win:
+		win = true
+		$WinTimer.start()
 
 func on_switch_character_1():
 	player1.current_player = false
@@ -39,3 +36,11 @@ func on_switch_character_2():
 
 func _on_PlayerSwitchCooldown_timeout():
 	player1.current_player = true
+
+
+func _on_WinTimer_timeout():
+	$ScreenBlocker/AnimationPlayer.play("fade_out")
+
+
+func to_win_screen():
+	get_tree().change_scene("res://src/WinScreen.tscn")
