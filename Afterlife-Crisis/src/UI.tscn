@@ -85,4 +85,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="ContinueBox" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true
+
 [connection signal="timeout" from="TextProcess" to="." method="_on_TextProcess_timeout"]
+[connection signal="timeout" from="ContinueBox" to="." method="_on_ContinueBox_timeout"]

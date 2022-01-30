@@ -11,6 +11,7 @@ signal update_text
 var velocity = Vector3.ZERO
 var gravity = -30
 var speed = 10
+var FAKE = false
 
 onready var camera = $Pivot/Camera
 onready var raycast = $Pivot/RayCast
@@ -33,8 +34,23 @@ func _physics_process(delta):
 	
 	if current_player:
 		var vel = get_direction() * speed
-		if Input.is_action_pressed("run"):
+		if Input.is_action_pressed("run") && get_name() == "Player":
 			vel *= 2
+		
+		if Input.is_action_just_pressed("crouch") && get_name() == "Player2":
+			$MeshInstance2.visible = true
+			$MeshInstance.visible = false
+			$CollisionShape2.disabled = false
+			$CollisionShape.disabled = true
+			$Pivot.translation = Vector3(0, -2, 0)
+		
+		if Input.is_action_just_released("crouch") && get_name() == "Player2":
+			$MeshInstance2.visible = false
+			$MeshInstance.visible = true
+			$CollisionShape2.disabled = true
+			$CollisionShape.disabled = false
+			$Pivot.translation = Vector3(0, 2, 0)
+		
 		velocity.x = vel.x
 		velocity.z = vel.z
 	velocity = move_and_slide(velocity, Vector3.UP, true)
@@ -50,15 +66,17 @@ func _input(event):
 				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 			
 			elif $UI.textbox.percent_visible != 1:
-				$UI.textbox.percent_visible = 1
+				$UI.finish_text()
 			
 			elif raycast.is_colliding():
 				var col = raycast.get_collider()
+#				if col is Player:
+#					handle_dialog()
 				if col.is_in_group("interactable"):
 					emit_signal("update_text", col.get_dialog())
 
 		if event.is_action_pressed("jump") && is_on_floor():
-			velocity.y = 15
+			velocity.y = 18
 		
 		if event.is_action_pressed("switch_character"):
 			velocity.x = 0
@@ -82,6 +100,10 @@ func get_direction():
 	if Input.is_action_pressed("walk_right"):
 		direction += global_transform.basis.x
 	return direction.normalized()
+
+
+func handle_dialog():
+	print(get_name())
 
 
 func get_dialog():
